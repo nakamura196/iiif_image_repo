@@ -11,7 +11,7 @@ import glob
 
 import yaml
 
-input_file_path = "data/input_tmp/aaa/yanesen-02-001.jpg"
+input_file_path = "data/input_tmp/toyo.jpg"
 
 filename = input_file_path.split("/")[-1]
 
