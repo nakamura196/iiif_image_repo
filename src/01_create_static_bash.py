@@ -11,30 +11,19 @@ import glob
 
 import yaml
 
-config_path = "/Users/nakamura/git/min_a/lda/src/data/config.yml"
-f = open(config_path, "r+")
-config = yaml.load(f)
+input_file_path = "data/input_tmp/aaa/yanesen-02-001.jpg"
 
-doc_dir = config["doc_dir"]
-src_dir = config["src_dir"]
+filename = input_file_path.split("/")[-1]
 
-prefix = config["prefix"]
+odir = input_file_path.replace("data/input_tmp", "").replace("/"+filename, "")
 
-
-f = open(src_dir+'/tmp/convert.sh', 'w')
+f = open('bash.sh', 'w')
 writer = csv.writer(f, lineterminator='\n')
 
 
-files = glob.glob(
-    doc_dir+'/data/image/original/**/*.jpg', recursive=True)
-for file in files:
+line = "python iiif_static/iiif_static.py  -d ../docs"+odir+" -t 200  -p https://nakamura196.github.io/iiif_image_repo"+odir+" "+input_file_path
 
-    base_dir_pair = os.path.split(file)
-    odir = base_dir_pair[0].replace("/original/", "/tile/")
 
-    line = "python "+src_dir+"/iiif_static/iiif_static.py  -d "+odir+" -t 200  -p "+odir.replace(doc_dir, prefix)+" "+file
-
-    
-    writer.writerow([line])
+writer.writerow([line])
 
 f.close()
